@@ -18,8 +18,8 @@ class User(models.Model):
     gold = models.IntegerField('金币')
     diamond = models.IntegerField('钻石')
     createtime = models.DateTimeField(auto_now=True)
-    agentid = models.ForeignKey('Agent',db_column='agentid',blank=True,null=True,on_delete=models.SET_NULL)
-    promotecode = models.CharField('推广码'，max_length=10)
+    agentid = models.ForeignKey('Agenter',db_column='agentid',blank=True,null=True,on_delete=models.SET_NULL)
+    promotecode = models.CharField('推广码',max_length=10)
     referrer = models.CharField('推荐人', max_length = 10)
     accountdisable = models.BooleanField('账号是否被封',default=False)
     isrobot = models.BooleanField('是否为机器人', default=False)
@@ -28,7 +28,7 @@ class User(models.Model):
         db_table = 'User'
 
 
-class Agent(models.Model):
+class Agenter(models.Model):
     agentid = models.AutoField(primary_key=True)
     name = models.CharField('代理名',max_length=30)
     acode = models.CharField('代理编码', max_length=20)
@@ -39,6 +39,30 @@ class Agent(models.Model):
     createtime = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = 'Agent'
+        db_table = 'Agenter'
 
+class LoginRecord(models.Model):
+    id = models.AutoField(primary_key=True)
+    userid = models.ForeignKey('User', db_column='userid',blank=True, null=True, on_delete=models.SET_NULL)
+    logintime = models.DateTimeField(auto_now=True)
+    ipaddr = models.CharField(max_length=32)
+
+    class Meta:
+        db_table = 'LoginRecord'
+
+class Notice(models.Model):
+    id = models.AutoField(primary_key=True)
+    msg = models.CharField(max_length=300)
+    pubtime = models.DateTimeField()
+
+    class Meta:
+        db_table = 'Notice'
+
+class Mail(models.Model):
+    id = models.AutoField(primary_key=True)
+    msg = models.TextField()
+    pubtime = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'Mail'
 
