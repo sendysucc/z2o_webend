@@ -1,2 +1,3 @@
 *.pyc
-migrations/*_initial.py
+manager/migrations/*_initial.py
+manager/migrations/__pycache__
